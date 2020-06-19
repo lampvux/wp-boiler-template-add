@@ -30,7 +30,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
- $mot = "haiba";
+
 
 /**
  * Currently plugin version.

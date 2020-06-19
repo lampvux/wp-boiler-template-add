@@ -89,46 +89,25 @@ class Plugin_Name_Public {
 	}
 
 
-	/**
-	 * register page template 
-	 */
-	public function plugin_name_add_interface_page_filter($post_templates)
-	{
-		// Add custom template named template-custom.php to select dropdown 
-		$post_templates['plugin-name-page-template.php'] = __('Plugin_Name Page Template');			
+	
+	public function plugin_name_add_interface_page_filter($post_templates){		
+		$post_templates['plugin-name-page-template.php'] = __('Plugin_Name Page Template');
+		return $post_templates;}
+	
+	public function plugin_name_load_interface_page_template($template){
+		global $post;$templates_dir = 'templates';
 
-		return $post_templates;
-	}
-	/**
-	 * load page template
-	 */
-	public function plugin_name_load_interface_page_template($template)
-	{
-		global $post;
-		$templates_dir = 'templates';
-
-		$settings_post_type_name = array(
-			'custom_post_type' => 'post_type_name',
-			'templates_dir' => 'templates',
-		);		
+		$settings_post_type_name = array('custom_post_type' => 'post_type_name','templates_dir' => 'templates');		
 		
 		include plugin_dir_url( __FILE__ ) .'class-plugin-name-page-template.php';	
 
 		include plugin_dir_url( __FILE__ ) .'class-plugin-name-template-post-type.php';
 
+		if ($template == '') {throw new \Exception('No template found');}return $template;}
 
-		if ($template == '') {
-			throw new \Exception('No template found');
-		}
-		return $template;
-
-	}
-
-
-	
 	/**	
 	 * locate template file part
-	 */
+	*/
 	function locate_template( $template, $settings, $page_type ) {
 
 		$theme_files = array(
@@ -142,23 +121,19 @@ class Plugin_Name_Public {
 			// Try to locate in theme first
 			return $template;
 			
-		} else {	
-			
+		} else {				
 			// Try to locate in plugin base folder,
 			// try to locate in plugin $settings['templates'] folder,
 			// return $template if non of above exist
 			$locations = array(
 				join( DIRECTORY_SEPARATOR, array( WP_PLUGIN_DIR, $this->plugin_name, '' ) ),
 				join( DIRECTORY_SEPARATOR, array( WP_PLUGIN_DIR, $this->plugin_name, $settings['templates_dir'], '' ) ), //plugin $settings['templates'] folder
-			);
-	
+			);	
 			foreach ( $locations as $location ) {
-				if ( file_exists( $location . $theme_files[0] ) ) {
-					
+				if ( file_exists( $location . $theme_files[0] ) ) {					
 					return $location . $theme_files[0];
 				}
-			}
-	
+			}	
 			return $template;	
 		}
 			
