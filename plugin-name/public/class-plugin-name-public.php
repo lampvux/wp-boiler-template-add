@@ -103,7 +103,7 @@ class Plugin_Name_Public {
 
 		include plugin_dir_url( __FILE__ ) .'class-plugin-name-template-post-type.php';
 
-		if ($template == '') {throw new \Exception('No template found');}return $template;}
+		return $template;}
 
 	/**	
 	 * locate template file part
