@@ -41,7 +41,7 @@ class Plugin_Name_Database {
             `id`          int NOT NULL AUTO_INCREMENT ,
             `name` varchar(500)  NULL ,            
             `date_created` timestamp NOT NULL ,
-            PRIMARY KEY (`id`),           
+            PRIMARY KEY (`id`)          
             ) $charset_collate   ";
 
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
